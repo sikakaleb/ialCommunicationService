@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: bilal747/spring_service_template
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+mongodb:
+  image:
+    repository: mongo
+    tag: "6.0"
+    pullPolicy: IfNotPresent
+  username: root
+  password: password
+  database: mydatabase
+
+service:
+  type: LoadBalancer
+  port: 8080
+
+mongodbService:
+  type: ClusterIP
+  port: 27017
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
