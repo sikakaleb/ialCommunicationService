@@ -1,0 +1,3 @@
+docker-compose build
+docker tag spring_service_template bilal747/spring_service_template:latest
+docker push bilal747/spring_service_template:latest
