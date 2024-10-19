@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.service.service.model.User;
 import com.service.service.service.UserService;
 
+import java.util.List;
+
 @RestController
 public class HelloWorldController {
 
@@ -23,5 +25,11 @@ public class HelloWorldController {
         // Save the user to the database
         userService.saveUser(user);
         return "turkish hallo";
+    }
+
+    @GetMapping
+    public List<User> getAllUsers() {
+        // Retrieve all users from the database
+        return userService.getAllUsers();
     }
 }
