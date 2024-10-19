@@ -34,12 +34,12 @@ public class ConversationService {
 
     // Obtenir toutes les conversations actives d'un utilisateur (non archivées)
     public List<Conversation> getActiveConversationsForUser(String userId) {
-        return conversationRepository.findByParticipantIdsContainingAndIsArchivedFalse(userId);
+        return conversationRepository.findByParticipantIdsContainingAndArchivedFalse(userId);
     }
 
     // Obtenir toutes les conversations archivées d'un utilisateur
     public List<Conversation> getArchivedConversationsForUser(String userId) {
-        return conversationRepository.findByParticipantIdsContainingAndIsArchivedTrue(userId);
+        return conversationRepository.findByParticipantIdsContainingAndArchivedTrue(userId);
     }
 
     // Archiver une conversation (suppression logique)
@@ -94,6 +94,25 @@ public class ConversationService {
         // Sauvegarde de l'état de la conversation
         return conversationRepository.save(conversation);
     }
+
+    // Restaurer une conversation archivée
+    public Conversation restoreArchivedConversation(String conversationId, String userId) {
+        Conversation conversation = conversationRepository.findById(conversationId)
+                .orElseThrow(() -> new RuntimeException("Conversation non trouvée"));
+
+        if (conversation.isArchived() && conversation.getParticipantIds().contains(userId)) {
+            conversation.setArchived(false);
+            conversation.setLastUpdated(LocalDateTime.now());
+            return conversationRepository.save(conversation);
+        } else {
+            throw new RuntimeException("Accès refusé ou conversation non archivée");
+        }
+    }
+
+    // Obtenir toutes les conversations archivées pour un utilisateur
+    /*public List<Conversation> getArchivedConversationsForUser(String userId) {
+        return conversationRepository.findArchivedConversationsForUser(userId);
+    }*/
 
 
 }

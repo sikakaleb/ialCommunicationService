@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,9 +83,9 @@ public class MessageService {
     }
 
     // Get all unread messages for a user
-    public List<Message> getUnreadMessages(String recipientId) {
+    /*public List<Message> getUnreadMessages(String recipientId) {
         return messageRepository.findByRecipientIdAndStatus(recipientId, MessageStatus.SENT);
-    }
+    }*/
 
     // Mark a message as read
     public Message markMessageAsRead(String messageId) {
@@ -124,6 +125,57 @@ public class MessageService {
     // Obtenir tous les messages non supprimés par l'utilisateur
     public List<Message> getMessagesForUser(String conversationId, String userId) {
         return messageRepository.findByConversationIdAndDeletedByRecipientFalseOrDeletedBySenderFalse(conversationId, userId);
+    }
+
+    // Restaurer un message supprimé pour un utilisateur
+    public Message restoreDeletedMessage(String messageId, String userId) {
+        Message message = messageRepository.findById(messageId)
+                .orElseThrow(() -> new RuntimeException("Message non trouvé"));
+
+        // Si l'utilisateur est l'expéditeur
+        if (message.getSenderId().equals(userId) && message.isDeletedBySender()) {
+            message.setDeletedBySender(false);
+        }
+
+        // Si l'utilisateur est le destinataire
+        if (message.getRecipientId().equals(userId) && message.isDeletedByRecipient()) {
+            message.setDeletedByRecipient(false);
+        }
+
+        return messageRepository.save(message);
+    }
+
+    // Restaurer un message archivé
+    public Message restoreArchivedMessage(String messageId, String userId) {
+        Message message = messageRepository.findById(messageId)
+                .orElseThrow(() -> new RuntimeException("Message non trouvé"));
+
+        if (message.isArchived() && (message.getSenderId().equals(userId) || message.getRecipientId().equals(userId))) {
+            message.setArchived(false);
+        } else {
+            throw new RuntimeException("Accès refusé ou message non archivé");
+        }
+
+        return messageRepository.save(message);
+    }
+
+    // Obtenir tous les messages supprimés pour l'utilisateur
+    public List<Message> getDeletedMessagesForUser(String userId) {
+        List<Message> deletedBySender = messageRepository.findBySenderIdAndIsDeletedBySenderTrue(userId);
+        List<Message> deletedByRecipient = messageRepository.findByRecipientIdAndIsDeletedByRecipientTrue(userId);
+
+        // Combine les deux listes si nécessaire
+        List<Message> allDeletedMessages = new ArrayList<>();
+        allDeletedMessages.addAll(deletedBySender);
+        allDeletedMessages.addAll(deletedByRecipient);
+
+        return allDeletedMessages;
+    }
+
+
+    // Obtenir tous les messages archivés pour l'utilisateur
+    public List<Message> getArchivedMessagesForUser(String userId) {
+        return messageRepository.findByRecipientIdAndArchivedTrue(userId);
     }
 
 }

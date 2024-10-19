@@ -20,7 +20,7 @@ public class ConversationArchiver {
     public void archiveInactiveConversations() {
         LocalDateTime cutoffDate = LocalDateTime.now().minusDays(30); // Conversations inactives depuis 30 jours
         List<Conversation> inactiveConversations = conversationRepository
-                .findByLastUpdatedBeforeAndIsArchivedFalse(cutoffDate);
+                .findByLastUpdatedBeforeAndArchivedFalse(cutoffDate);
 
         for (Conversation conversation : inactiveConversations) {
             conversation.setArchived(true);

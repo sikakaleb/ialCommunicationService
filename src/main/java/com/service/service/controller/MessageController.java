@@ -55,6 +55,18 @@ public class MessageController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+    @PutMapping("/restore/{messageId}")
+    public ResponseEntity<Message> restoreDeletedMessage(@PathVariable String messageId, @RequestParam String userId) {
+        Message restoredMessage = messageService.restoreDeletedMessage(messageId, userId);
+        return new ResponseEntity<>(restoredMessage, HttpStatus.OK);
+    }
+
+    @PutMapping("/restore-archived/{messageId}")
+    public ResponseEntity<Message> restoreArchivedMessage(@PathVariable String messageId, @RequestParam String userId) {
+        Message restoredMessage = messageService.restoreArchivedMessage(messageId, userId);
+        return new ResponseEntity<>(restoredMessage, HttpStatus.OK);
+    }
+
     // Delete a message
     @DeleteMapping("/delete/{messageId}")
     public ResponseEntity<Void> deleteMessage(@PathVariable String messageId, @RequestParam String userId) {

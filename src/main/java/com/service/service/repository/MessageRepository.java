@@ -20,7 +20,17 @@ public interface MessageRepository extends MongoRepository<Message, String> {
     List<Message> findByRecipientId(String recipientId);
 
     // Find unread messages by recipient
-    List<Message> findByRecipientIdAndStatus(String recipientId, MessageStatus status);
+    //List<Message> findByRecipientIdAndArchivedTrue(String recipientId);
+
 
     List<Message> findByConversationIdAndDeletedByRecipientFalseOrDeletedBySenderFalse(String conversationId, String userId);
+
+    //List<Message> findDeletedMessagesForUser(String userId);
+
+    List<Message> findBySenderIdAndIsDeletedBySenderTrue(String senderId);
+
+    List<Message> findByRecipientIdAndIsDeletedByRecipientTrue(String recipientId);
+
+
+    List<Message> findByRecipientIdAndArchivedTrue(String userId);
 }

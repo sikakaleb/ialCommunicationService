@@ -18,12 +18,14 @@ public interface ConversationRepository extends MongoRepository<Conversation, St
     Optional<Conversation> findById(String conversationId);
 
     // Trouver les conversations actives d'un utilisateur
-    List<Conversation> findByParticipantIdsContainingAndIsArchivedFalse(String participantId);
+    List<Conversation> findByParticipantIdsContainingAndArchivedTrue(String participantId);
 
     // Trouver les conversations archivées d'un utilisateur
-    List<Conversation> findByParticipantIdsContainingAndIsArchivedTrue(String participantId);
+    List<Conversation> findByParticipantIdsContainingAndArchivedFalse(String participantId);
 
     // Trouver les conversations inactives pour archivage automatique
-    List<Conversation> findByLastUpdatedBeforeAndIsArchivedFalse(LocalDateTime cutoffDate);
+    List<Conversation> findByLastUpdatedBeforeAndArchivedFalse(LocalDateTime cutoffDate);
+
+    //List<Conversation> findArchivedConversationsForUser(String userId);
 }
 

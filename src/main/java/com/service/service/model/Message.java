@@ -34,6 +34,8 @@ public class Message {
     private boolean isUrgent; // Mark if it's an urgent message (for critical cases)
     private Map<String, Object> customMetadata; // Allow any additional metadata to be stored
 
+    private boolean archived = false;// Whether the message is archived
+
     // Constructor, Getters, Setters
 
 
@@ -160,6 +162,18 @@ public class Message {
 
     public void setReceivedAt(LocalDateTime now) {
         this.status = MessageStatus.RECEIVED;
+    }
+
+    public LocalDateTime getReceivedAt() {
+        return receivedAt;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
     //endregion
 }

@@ -19,7 +19,7 @@ public class Conversation {
 
     private boolean isClosed; // If the conversation is marked as closed (e.g., medical issue resolved)
 
-    private boolean archived; // If the conversation is archived
+    private boolean archived = false;
 
     public String getId() {
         return id;

@@ -65,6 +65,12 @@ public class ConversationController {
         return ResponseEntity.ok(unarchivedConversation);
     }
 
+    @PutMapping("/restore-archived/{conversationId}")
+    public ResponseEntity<Conversation> restoreArchivedConversation(@PathVariable String conversationId, @RequestParam String userId) {
+        Conversation restoredConversation = conversationService.restoreArchivedConversation(conversationId, userId);
+        return new ResponseEntity<>(restoredConversation, HttpStatus.OK);
+    }
+
     // Obtenir les conversations actives d'un utilisateur
     @GetMapping("/active/{userId}")
     public ResponseEntity<List<Conversation>> getActiveConversations(@PathVariable String userId) {
