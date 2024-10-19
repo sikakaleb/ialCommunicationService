@@ -17,6 +17,27 @@ public class ConversationController {
     @Autowired
     private ConversationService conversationService;
 
+
+    // Get conversations for a user
+    @GetMapping("/user/{userId}")
+    public List<Conversation> getConversationsForUser(@PathVariable String userId) {
+        return conversationService.getConversationsForUser(userId);
+    }
+
+    // Obtenir les conversations actives d'un utilisateur
+    @GetMapping("/active/{userId}")
+    public ResponseEntity<List<Conversation>> getActiveConversations(@PathVariable String userId) {
+        List<Conversation> conversations = conversationService.getActiveConversationsForUser(userId);
+        return ResponseEntity.ok(conversations);
+    }
+
+    // Obtenir les conversations archivées d'un utilisateur
+    @GetMapping("/archived/{userId}")
+    public ResponseEntity<List<Conversation>> getArchivedConversations(@PathVariable String userId) {
+        List<Conversation> conversations = conversationService.getArchivedConversationsForUser(userId);
+        return ResponseEntity.ok(conversations);
+    }
+
     // Start a new conversation
     @PostMapping("/start")
     public ResponseEntity<Conversation> startConversation(@RequestBody ConversationRequest request) {
@@ -27,11 +48,6 @@ public class ConversationController {
         return new ResponseEntity<>(conversation, HttpStatus.CREATED);
     }
 
-    // Get conversations for a user
-    @GetMapping("/user/{userId}")
-    public List<Conversation> getConversationsForUser(@PathVariable String userId) {
-        return conversationService.getConversationsForUser(userId);
-    }
 
     // Close a conversation
     @PutMapping("/close/{conversationId}")
@@ -71,18 +87,6 @@ public class ConversationController {
         return new ResponseEntity<>(restoredConversation, HttpStatus.OK);
     }
 
-    // Obtenir les conversations actives d'un utilisateur
-    @GetMapping("/active/{userId}")
-    public ResponseEntity<List<Conversation>> getActiveConversations(@PathVariable String userId) {
-        List<Conversation> conversations = conversationService.getActiveConversationsForUser(userId);
-        return ResponseEntity.ok(conversations);
-    }
 
-    // Obtenir les conversations archivées d'un utilisateur
-    @GetMapping("/archived/{userId}")
-    public ResponseEntity<List<Conversation>> getArchivedConversations(@PathVariable String userId) {
-        List<Conversation> conversations = conversationService.getArchivedConversationsForUser(userId);
-        return ResponseEntity.ok(conversations);
-    }
 }
 

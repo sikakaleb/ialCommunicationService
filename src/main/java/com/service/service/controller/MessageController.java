@@ -21,6 +21,16 @@ public class MessageController {
     @Autowired
     private CommService commService;
 
+    // Get all messages in a conversation
+    @GetMapping("/conversation/{conversationId}/messages")
+    public ResponseEntity<List<Message>> getMessagesByConversation(
+            @PathVariable String conversationId,
+            @RequestParam String userId) {
+
+        List<Message> messages = messageService.getMessagesByConversation(conversationId, userId);
+        return ResponseEntity.ok(messages);
+    }
+
     // Send a message
     @PostMapping("/send")
     public ResponseEntity<Void> sendMessage(@RequestBody MessageRequest request) {
@@ -32,15 +42,6 @@ public class MessageController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // Get all messages in a conversation
-    @GetMapping("/conversation/{conversationId}/messages")
-    public ResponseEntity<List<Message>> getMessagesByConversation(
-            @PathVariable String conversationId,
-            @RequestParam String userId) {
-
-        List<Message> messages = messageService.getMessagesByConversation(conversationId, userId);
-        return ResponseEntity.ok(messages);
-    }
 
     // Mark a message as read
     @PutMapping("/read/{messageId}")
