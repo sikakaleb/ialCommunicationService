@@ -8,6 +8,8 @@ import com.service.service.model.User;
 import com.service.service.service.UserService;
 import java.util.List;
 
+import java.util.List;
+
 @RestController
 public class HelloWorldController {
 
@@ -25,6 +27,12 @@ public class HelloWorldController {
         userService.saveUser(user);
         return "HelloWorldController is working";
     }
+    @GetMapping
+    public List<User> getAllUsers() {
+        // Retrieve all users from the database
+        return userService.getAllUsers();
+    }
+
     @GetMapping
     public List<User> getAllUsers() {
         // Retrieve all users from the database
