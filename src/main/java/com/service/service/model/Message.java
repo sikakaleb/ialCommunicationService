@@ -18,8 +18,8 @@ public class Message {
     private MessageType type; // Type of message (email, SMS, push notification)
 
     private MessageStatus status; // Status of the message (SENT, DELIVERED, READ, DELETED)
-    private boolean isDeletedBySender; // Whether the message was deleted by the sender
-    private boolean isDeletedByRecipient; // Whether the message was deleted by the recipient
+    private boolean isDeletedBySender = false; // Whether the message was deleted by the sender
+    private boolean isDeletedByRecipient = false; // Whether the message was deleted by the recipient
 
     private LocalDateTime sentAt; // Timestamp for when the message was sent
     private LocalDateTime deliveredAt; // Timestamp for when the message was delivered
@@ -31,7 +31,7 @@ public class Message {
     private List<String> attachments; // List of attachment URLs or paths
 
     // Additional metadata
-    private boolean isUrgent; // Mark if it's an urgent message (for critical cases)
+    private boolean isUrgent = false; // Mark if it's an urgent message (for critical cases)
     private Map<String, Object> customMetadata; // Allow any additional metadata to be stored
 
     private boolean archived = false;// Whether the message is archived

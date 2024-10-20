@@ -21,6 +21,8 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.ACKS_CONFIG, "all"); // Assurer la réception par tous les réplicas
+        configProps.put(ProducerConfig.RETRIES_CONFIG, 3); // Configurer un nombre de tentatives de réessai
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
@@ -28,4 +30,5 @@ public class KafkaProducerConfig {
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,14 +19,19 @@ public class ConversationService {
     public Conversation startConversation(String initiatorId, List<String> participantIds) {
         Conversation conversation = new Conversation();
         conversation.setInitiatorId(initiatorId);
-        participantIds.add(initiatorId); // Inclure l'initiateur dans les participants
-        conversation.setParticipantIds(participantIds);
+
+        // Créer une nouvelle liste modifiable pour les participants
+        List<String> participants = new ArrayList<>(participantIds);
+        participants.add(initiatorId); // Inclure l'initiateur dans les participants
+        conversation.setParticipantIds(participants);
+
         conversation.setStartedAt(LocalDateTime.now());
         conversation.setLastUpdated(LocalDateTime.now());
         conversation.setClosed(false);
         conversation.setArchived(false); // Initialiser comme non archivée
         return conversationRepository.save(conversation);
     }
+
 
     // Get all conversations for a user
     public List<Conversation> getConversationsForUser(String userId) {
