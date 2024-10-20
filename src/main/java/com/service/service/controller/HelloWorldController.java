@@ -32,10 +32,4 @@ public class HelloWorldController {
         // Retrieve all users from the database
         return userService.getAllUsers();
     }
-
-    @GetMapping
-    public List<User> getAllUsers() {
-        // Retrieve all users from the database
-        return userService.getAllUsers();
-    }
 }
