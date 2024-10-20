@@ -11,6 +11,15 @@ public class User {
     private String name;
     private String email;
 
+    public User(String johnDoe, String mail) {
+        this.name = johnDoe;
+        this.email = mail;
+    }
+
+    public User() {
+
+    }
+
     // Getter for id
     public String getId() {
         return id;

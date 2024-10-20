@@ -32,3 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 .m2
+.env
+.env.dev
+.env.prod
+.env.test
+.env.staging
