@@ -37,7 +37,7 @@ public class MessageController {
         commService.sendMessageToUser(
                 request.getRecipientId(),
                 request.getContent(),
-                request.getType().toString().toLowerCase()
+                request.getTargetUserType().toString().toLowerCase()
         );
         return new ResponseEntity<>(HttpStatus.OK);
     }

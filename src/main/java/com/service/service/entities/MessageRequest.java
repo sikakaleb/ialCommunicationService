@@ -62,4 +62,12 @@ public class MessageRequest {
     public void setUrgent(boolean urgent) {
         isUrgent = urgent;
     }
+
+    public TargetUserType getTargetUserType() {
+        return targetUserType;
+    }
+
+    public void setTargetUserType(TargetUserType targetUserType) {
+        this.targetUserType = targetUserType;
+    }
 }
