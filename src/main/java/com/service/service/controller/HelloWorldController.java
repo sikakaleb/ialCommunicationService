@@ -32,4 +32,5 @@ public class HelloWorldController {
         // Retrieve all users from the database
         return userService.getAllUsers();
     }
+
 }

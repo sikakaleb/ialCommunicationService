@@ -9,6 +9,8 @@ public class MessageRequest {
     private String conversationId;
     private MessageType type;
     private boolean isUrgent;
+    private TargetUserType targetUserType; // Utilisation de l'énumération
+
 
     // Getters and Setters
 
