@@ -1,7 +1,9 @@
 package com.service.service.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.service.entities.MessageRequest;
+import com.service.service.entities.TargetUserType;
 import com.service.service.model.Message;
 import com.service.service.model.MessageStatus;
 import com.service.service.model.MessageType;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,6 +41,10 @@ class MessageControllerTest {
 
     private MockMvc mockMvc;
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -62,18 +69,27 @@ class MessageControllerTest {
 
     @Test
     void testSendMessage() throws Exception {
+        // Préparation de la requête MessageRequest
         MessageRequest request = new MessageRequest();
         request.setRecipientId("user2");
         request.setContent("Hello!");
         request.setType(MessageType.EMAIL); // Ex: EMAIL, SMS, etc.
+        request.setTargetUserType(TargetUserType.DOCTOR); // Exemple pour définir le type d'utilisateur cible
 
+        // Conversion de l'objet request en JSON
+        String requestJson = objectMapper.writeValueAsString(request);
+
+        // Exécution du test
         mockMvc.perform(post("/api/messages/send")
                         .contentType("application/json")
-                        .content("{\"recipientId\": \"user2\", \"content\": \"Hello!\", \"type\": \"EMAIL\"}"))
+                        .content(requestJson))  // Utilisation de l'objet JSON
                 .andExpect(status().isOk());
 
-        verify(commService, times(1)).sendMessageToUser(eq("user2"), eq("Hello!"), eq("email"));
+        // Vérification que le service a bien été appelé avec les bons paramètres
+        verify(commService, times(1))
+                .sendMessageToUser(eq("user2"), eq("Hello!"), eq("doctor"));
     }
+
 
     @Test
     void testMarkMessageAsRead() throws Exception {
