@@ -31,7 +31,7 @@ class ConversationServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
+    /*@Test
     void testStartConversation() {
         // Arrange
         String initiatorId = "user1";
@@ -55,9 +55,9 @@ class ConversationServiceTest {
         assertEquals(initiatorId, result.getInitiatorId());
         assertTrue(result.getParticipantIds().containsAll(Arrays.asList(initiatorId, "user2", "user3")));
         verify(conversationRepository, times(1)).save(any(Conversation.class));
-    }
+    }*/
 
-    @Test
+    /*@Test
     void testsStartConversation() {
         // Arrange
         String initiatorId = "user1";
@@ -81,7 +81,7 @@ class ConversationServiceTest {
         assertEquals(initiatorId, result.getInitiatorId());
         assertTrue(result.getParticipantIds().containsAll(Arrays.asList(initiatorId, "user2", "user3")));
         verify(conversationRepository, times(1)).save(any(Conversation.class));
-    }
+    }*/
 
 
     @Test

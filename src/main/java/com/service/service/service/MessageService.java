@@ -44,6 +44,7 @@ public class MessageService {
     // Obtenir tous les messages dans une conversation
     public List<Message> getMessagesByConversation(String conversationId, String userId) {
         // Récupération de la conversation par son ID
+        //List<Conversation> conversations = conversationRepository.findAll();
         Conversation conversation = conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new RuntimeException("Conversation non trouvée"));
 
