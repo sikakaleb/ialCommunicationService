@@ -30,7 +30,12 @@ public interface ConversationRepository extends MongoRepository<Conversation, St
     //List<Conversation> findArchivedConversationsForUser(String userId);
     // Trouver une conversation qui contient exactement les participants spécifiés
     @Query("{ 'participantIds': { $all: ?0 }, 'participantIds': { $size: ?1 } }")
-    List<Conversation> findByParticipantIdsContainingAll(List<String> participantIds, int size);
+    List<Conversation> findByParticipantIdsWithExactMatch(List<String> participantIds, int size);
+
+    @Query("{ 'participantIds': { $all: ?0 } }")
+    List<Conversation> findByParticipants(List<String> participantIds);
+
+
 
 }
 

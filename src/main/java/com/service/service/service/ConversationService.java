@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ConversationService {
@@ -138,20 +136,28 @@ public class ConversationService {
 
     // Vérifier si une conversation existe entre les participants, sinon la créer
     public Conversation findOrCreateConversation(String initiatorId, List<String> participantIds) {
-        // Ajout de l'initiateur à la liste des participants
+        // Ajouter l'initiateur à la liste des participants
         List<String> allParticipants = new ArrayList<>(participantIds);
         allParticipants.add(initiatorId);
 
-        // Recherche de la conversation existante avec exactement ces participants
-        List<Conversation> existingConversations = conversationRepository.findByParticipantIdsContainingAll(allParticipants, allParticipants.size());
+        // Rechercher les conversations contenant tous les participants
+        List<Conversation> existingConversations = conversationRepository.findByParticipants(allParticipants);
 
-        if (!existingConversations.isEmpty()) {
-            return existingConversations.get(0);  // Retourner la première conversation trouvée
+        // Vérifier si une des conversations récupérées a exactement le même ensemble de participants
+        for (Conversation conversation : existingConversations) {
+            Set<String> conversationParticipants = new HashSet<>(conversation.getParticipantIds());
+            Set<String> requestParticipants = new HashSet<>(allParticipants);
+
+            if (conversationParticipants.equals(requestParticipants)) {
+                // Les ensembles sont exactement les mêmes
+                return conversation;
+            }
         }
 
-        // Sinon, créer une nouvelle conversation
+        // Si aucune conversation correspondante n'a été trouvée, en créer une nouvelle
         return startConversation(initiatorId, participantIds);
     }
+
 
     // Créer une nouvelle conversation entre plusieurs participants
     public Conversation startConversation(String initiatorId, List<String> participantIds) {
