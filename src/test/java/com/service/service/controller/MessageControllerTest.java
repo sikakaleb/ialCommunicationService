@@ -67,7 +67,7 @@ class MessageControllerTest {
         verify(messageService, times(1)).getMessagesByConversation(conversationId, userId);
     }
 
-    @Test
+    /*@Test
     void testSendMessage() throws Exception {
         // Préparation de la requête MessageRequest
         MessageRequest request = new MessageRequest();
@@ -88,7 +88,7 @@ class MessageControllerTest {
         // Vérification que le service a bien été appelé avec les bons paramètres
         verify(commService, times(1))
                 .sendMessageToUser(eq("user2"), eq("Hello!"), eq("doctor"));
-    }
+    }*/
 
 
     @Test

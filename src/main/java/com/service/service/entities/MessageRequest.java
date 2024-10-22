@@ -2,9 +2,11 @@ package com.service.service.entities;
 
 import com.service.service.model.MessageType;
 
+import java.util.List;
+
 public class MessageRequest {
     private String senderId;
-    private String recipientId;
+    private List<String> recipientIds; // Modification : liste des destinataires
     private String content;
     private String conversationId;
     private MessageType type;
@@ -23,12 +25,12 @@ public class MessageRequest {
         this.senderId = senderId;
     }
 
-    public String getRecipientId() {
-        return recipientId;
+    public List<String> getRecipientIds() {
+        return recipientIds;
     }
 
-    public void setRecipientId(String recipientId) {
-        this.recipientId = recipientId;
+    public void setRecipientId(List<String> recipientId) {
+        this.recipientIds = recipientId;
     }
 
     public String getContent() {
