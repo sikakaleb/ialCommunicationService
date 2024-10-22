@@ -34,10 +34,7 @@ public class MessageController {
     // Send a message
     @PostMapping("/send")
     public ResponseEntity<Void> sendMessage(@RequestBody MessageRequest request) {
-        commService.sendMessageToUser(
-                request.getRecipientId(),
-                request.getContent(),
-                request.getType().toString().toLowerCase()
+        commService.sendMessageToUsers( request
         );
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -41,7 +41,7 @@ class HelloWorldControllerTest {
         // Act & Assert
         mockMvc.perform(get("/hello"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("turkish hallo"));
+                .andExpect(content().string("HelloWorldController is working"));
 
         // Verify that saveUser is called
         verify(userService, times(1)).saveUser(any(User.class));

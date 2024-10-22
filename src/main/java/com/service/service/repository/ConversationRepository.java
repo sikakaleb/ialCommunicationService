@@ -2,6 +2,7 @@ package com.service.service.repository;
 
 import com.service.service.model.Conversation;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -27,5 +28,14 @@ public interface ConversationRepository extends MongoRepository<Conversation, St
     List<Conversation> findByLastUpdatedBeforeAndArchivedFalse(LocalDateTime cutoffDate);
 
     //List<Conversation> findArchivedConversationsForUser(String userId);
+    // Trouver une conversation qui contient exactement les participants spécifiés
+    @Query("{ 'participantIds': { $all: ?0 }, 'participantIds': { $size: ?1 } }")
+    List<Conversation> findByParticipantIdsWithExactMatch(List<String> participantIds, int size);
+
+    @Query("{ 'participantIds': { $all: ?0 } }")
+    List<Conversation> findByParticipants(List<String> participantIds);
+
+
+
 }
 

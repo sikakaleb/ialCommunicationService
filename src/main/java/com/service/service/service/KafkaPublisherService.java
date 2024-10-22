@@ -40,8 +40,8 @@ public class KafkaPublisherService {
     // Méthode réutilisée pour tous les types de messages avec gestion des callbacks et retry
     @Retryable(
             value = {Exception.class},
-            maxAttempts = 5,
-            backoff = @Backoff(delay = 2000)) // Retenter jusqu'à 5 fois avec un délai de 2s entre chaque tentative
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 20000)) // Retenter jusqu'à 5 fois avec un délai de 2s entre chaque tentative
     private void sendMessage(String topic, String message) {
         // Envoi du message avec KafkaTemplate et récupération du résultat dans un ListenableFuture
         CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, message);

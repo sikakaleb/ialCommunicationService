@@ -22,21 +22,6 @@ public class MessageService {
     @Autowired
     private ConversationRepository conversationRepository;
 
-    // Send a new message
-    public Message sendMessage(String senderId, String recipientId, String content, String conversationId, MessageType type, boolean isUrgent) {
-        Message message = new Message();
-        message.setSenderId(senderId);
-        message.setRecipientId(recipientId);
-        message.setContent(content);
-        message.setConversationId(conversationId);
-        message.setType(type);
-        message.setStatus(MessageStatus.SENT);
-        message.setSentAt(LocalDateTime.now());
-        message.setUrgent(isUrgent);
-
-        return messageRepository.save(message);
-    }
-
     // Envoyer un message à plusieurs destinataires dans une conversation de groupe
     public void sendMessageToGroup(String senderId, List<String> recipientIds, String content, String conversationId, MessageType type, boolean isUrgent) {
         for (String recipientId : recipientIds) {

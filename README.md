@@ -56,7 +56,7 @@ Assurez-vous que vos instances MongoDB et Kafka fonctionnent. Mettez à jour les
 spring.data.mongodb.uri=mongodb://localhost:27017/commServiceDB
 
 # Configuration Kafka
-kafka.bootstrap-servers=localhost:9092
+kafka.bootstrap-servers=kafka:9092
 ```
 
 ### **Étape 3 : Construire et exécuter le projet**
