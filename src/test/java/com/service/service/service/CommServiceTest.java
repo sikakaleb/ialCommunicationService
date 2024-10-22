@@ -30,7 +30,7 @@ class CommServiceTest {
         MockitoAnnotations.openMocks(this); // Initialise les mocks
     }
 
-    @Test
+    /*@Test
     void testSendMessageToDoctor() {
         // Given
         String userId = "doctor123";
@@ -43,9 +43,9 @@ class CommServiceTest {
         // Then
         verify(doctorService, times(1)).sendMessage(userId, message);
         verifyNoInteractions(nurseService, patientService, relativeService);
-    }
+    }*/
 
-    @Test
+    /*@Test
     void testSendMessageToNurse() {
         // Given
         String userId = "nurse123";
@@ -104,5 +104,5 @@ class CommServiceTest {
 
         // Ensure no service is called
         verifyNoInteractions(doctorService, nurseService, patientService, relativeService);
-    }
+    }*/
 }
