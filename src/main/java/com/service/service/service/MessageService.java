@@ -62,6 +62,37 @@ public class MessageService {
         return messageRepository.findByConversationId(conversationId);
     }
 
+    // Obtenir les messages actifs d'une conversation
+    public List<Message> getActiveMessagesByConversation(String conversationId, String userId) {
+        // Récupération de la conversation par son ID
+        Conversation conversation = conversationRepository.findById(conversationId)
+                .orElseThrow(() -> new RuntimeException("Conversation non trouvée"));
+
+        // Vérification que l'utilisateur est bien un participant de la conversation
+        if (!conversation.getParticipantIds().contains(userId)) {
+            throw new RuntimeException("Utilisateur non participant à la conversation");
+        }
+
+        // Récupérer les messages actifs (non archivés) pour la conversation
+        return messageRepository.findByConversationIdAndArchivedFalse(conversationId);
+    }
+
+    // Obtenir les messages archivés d'une conversation
+    public List<Message> getArchivedMessagesByConversation(String conversationId, String userId) {
+        // Récupération de la conversation par son ID
+        Conversation conversation = conversationRepository.findById(conversationId)
+                .orElseThrow(() -> new RuntimeException("Conversation non trouvée"));
+
+        // Vérification que l'utilisateur est bien un participant de la conversation
+        if (!conversation.getParticipantIds().contains(userId)) {
+            throw new RuntimeException("Utilisateur non participant à la conversation");
+        }
+
+        // Récupérer les messages archivés pour la conversation
+        return messageRepository.findByConversationIdAndArchivedTrue(conversationId);
+    }
+
+
 
     // Get all messages sent by a user
     public List<Message> getMessagesSentByUser(String senderId) {

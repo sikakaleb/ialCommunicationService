@@ -7,8 +7,6 @@ public class ConversationRequest {
     private List<String> participantIds;
 
     // Getters and Setters
-
-
     public String getInitiatorId() {
         return initiatorId;
     }
