@@ -15,8 +15,6 @@ public class MessageRequest {
 
 
     // Getters and Setters
-
-
     public String getSenderId() {
         return senderId;
     }

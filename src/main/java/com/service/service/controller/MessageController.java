@@ -31,6 +31,27 @@ public class MessageController {
         return ResponseEntity.ok(messages);
     }
 
+    // Obtenir les messages actifs d'une conversation
+    @GetMapping("/conversation/{conversationId}/messages/active")
+    public ResponseEntity<List<Message>> getActiveMessagesByConversation(
+            @PathVariable String conversationId,
+            @RequestParam String userId) {
+
+        List<Message> messages = messageService.getActiveMessagesByConversation(conversationId, userId);
+        return ResponseEntity.ok(messages);
+    }
+
+    // Obtenir les messages archivés d'une conversation
+    @GetMapping("/conversation/{conversationId}/messages/archived")
+    public ResponseEntity<List<Message>> getArchivedMessagesByConversation(
+            @PathVariable String conversationId,
+            @RequestParam String userId) {
+
+        List<Message> messages = messageService.getArchivedMessagesByConversation(conversationId, userId);
+        return ResponseEntity.ok(messages);
+    }
+
+
     // Send a message
     @PostMapping("/send")
     public ResponseEntity<Void> sendMessage(@RequestBody MessageRequest request) {
