@@ -31,6 +31,11 @@ public interface MessageRepository extends MongoRepository<Message, String> {
 
     List<Message> findByRecipientIdAndIsDeletedByRecipientTrue(String recipientId);
 
-
     List<Message> findByRecipientIdAndArchivedTrue(String userId);
+
+    // Récupérer les messages non archivés (actifs) d'une conversation
+    List<Message> findByConversationIdAndArchivedFalse(String conversationId);
+
+    // Récupérer les messages archivés d'une conversation
+    List<Message> findByConversationIdAndArchivedTrue(String conversationId);
 }
